@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useApp } from './context/AppContext';
 import Sidebar from './components/Sidebar';
@@ -42,14 +43,15 @@ const PAGE_TITLES = {
 };
 
 function ProtectedLayout() {
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const path = window.location.pathname;
   const meta = PAGE_TITLES[path] || { title: 'Hospira HMS', sub: '' };
 
   return (
     <div className="app-shell">
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="main-content">
-        <Header title={meta.title} sub={meta.sub} />
+        <Header title={meta.title} sub={meta.sub} onMenuToggle={() => setSidebarOpen(o => !o)} />
         <div className="page-body">
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />

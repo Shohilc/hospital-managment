@@ -4,6 +4,7 @@
 
 /* ============================================================
    Hospira HMS — Google Material Minimalist Design
+   Fully Responsive: Mobile / Tablet / Desktop
    ============================================================ */
 
 
@@ -56,7 +57,15 @@ body {
 
 /* ── Layout ── */
 .app-shell { display: flex; height: 100vh; overflow: hidden; }
-.main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; margin-left: var(--sidebar-w); }
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-left: var(--sidebar-w);
+  transition: margin-left 0.25s ease;
+  min-width: 0;
+}
 .page-body { flex: 1; overflow-y: auto; padding: 24px 32px; }
 
 /* ── Sidebar ── */
@@ -68,8 +77,39 @@ body {
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  z-index: 100;
+  z-index: 300;
+  transition: transform 0.25s ease;
 }
+
+/* Mobile overlay backdrop */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 33, 36, 0.45);
+  z-index: 299;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Close button — hidden on desktop */
+.sidebar-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 22px;
+  margin-left: auto;
+  padding: 4px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+.sidebar-close-btn:hover { background: var(--bg); }
 
 .sidebar-logo {
   height: var(--header-h);
@@ -78,6 +118,7 @@ body {
   align-items: center;
   gap: 10px;
   border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .logo-icon {
@@ -88,6 +129,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  flex-shrink: 0;
 }
 
 .logo-text h2 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
@@ -121,11 +163,12 @@ body {
 
 .nav-item:hover { background: var(--bg); color: var(--text-primary); }
 .nav-item.active { background: var(--blue-light); color: var(--blue); font-weight: 600; }
-.nav-item .nav-icon { font-size: 18px; width: 20px; text-align: center; }
+.nav-item .nav-icon { font-size: 18px; width: 20px; text-align: center; flex-shrink: 0; }
 
 .sidebar-footer {
   padding: 16px;
   border-top: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .user-info { display: flex; align-items: center; gap: 10px; }
@@ -136,6 +179,7 @@ body {
   color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; font-weight: 600;
+  flex-shrink: 0;
 }
 .user-details p { font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .user-details span { font-size: 11px; color: var(--text-muted); }
@@ -153,9 +197,28 @@ body {
   flex-shrink: 0;
 }
 
-.header-title h1 { font-size: 20px; font-weight: 400; color: var(--text-primary); }
-.header-title p { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-.header-right { display: flex; align-items: center; gap: 10px; }
+.header-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+.header-title h1 { font-size: 20px; font-weight: 400; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.header-title p { font-size: 12px; color: var(--text-muted); margin-top: 1px; white-space: nowrap; }
+.header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+/* Hamburger button — hidden on desktop */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 22px;
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+.hamburger-btn:hover { background: var(--bg); }
 
 .header-btn {
   background: none;
@@ -217,7 +280,14 @@ body {
 .change.down { color: var(--red); }
 
 /* ── Page Header ── */
-.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 .page-header h2 { font-size: 22px; font-weight: 400; color: var(--text-primary); }
 .page-header p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 
@@ -234,6 +304,7 @@ body {
   border: 1px solid transparent;
   transition: all var(--transition);
   font-family: 'Inter', sans-serif;
+  white-space: nowrap;
 }
 
 .btn-primary { background: var(--blue); color: #fff; box-shadow: var(--shadow-sm); }
@@ -250,9 +321,9 @@ body {
 .btn-icon { padding: 7px; border-radius: 50%; min-width: 32px; justify-content: center; }
 
 /* ── Table ── */
-.table-container { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+.table-container { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); -webkit-overflow-scrolling: touch; }
 
-table { width: 100%; border-collapse: collapse; }
+table { width: 100%; border-collapse: collapse; min-width: 500px; }
 
 thead tr { background: var(--bg); border-bottom: 1px solid var(--border); }
 
@@ -287,6 +358,7 @@ tbody tr:hover { background: #f8f9fa; }
   border-radius: 20px;
   font-size: 11px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .badge-blue { background: var(--blue-light); color: var(--blue); }
@@ -302,7 +374,7 @@ tbody tr:hover { background: #f8f9fa; }
   background: rgba(32,33,36,0.4);
   z-index: 1000;
   display: flex; align-items: center; justify-content: center;
-  padding: 20px;
+  padding: 16px;
   animation: fadeIn 0.15s ease;
 }
 
@@ -313,7 +385,7 @@ tbody tr:hover { background: #f8f9fa; }
   border-radius: var(--radius-lg);
   width: 100%;
   max-width: 540px;
-  max-height: 90vh;
+  max-height: 92vh;
   overflow-y: auto;
   box-shadow: var(--shadow-lg);
   animation: scaleIn 0.2s ease;
@@ -334,7 +406,7 @@ tbody tr:hover { background: #f8f9fa; }
 .modal-close:hover { background: var(--bg); }
 
 .modal-body { padding: 24px; }
-.modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+.modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
 
 /* ── Forms ── */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -370,7 +442,7 @@ textarea { resize: vertical; min-height: 80px; }
 
 /* ── Filter bar ── */
 .filter-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-.filter-bar input, .filter-bar select { width: auto; min-width: 160px; border-radius: 24px; }
+.filter-bar input, .filter-bar select { width: auto; min-width: 140px; border-radius: 24px; flex: 1 1 140px; }
 
 /* ── Grid layouts ── */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -408,6 +480,7 @@ textarea { resize: vertical; min-height: 80px; }
   min-height: 100vh;
   background: var(--bg);
   display: flex; align-items: center; justify-content: center;
+  padding: 16px;
 }
 
 .login-card {
@@ -425,13 +498,14 @@ textarea { resize: vertical; min-height: 80px; }
 .login-logo p { font-size: 12px; color: var(--text-muted); }
 
 .login-form { display: flex; flex-direction: column; gap: 16px; }
-.login-roles { display: flex; gap: 8px; margin-bottom: 4px; }
+.login-roles { display: flex; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
 
 .role-btn {
   flex: 1; padding: 8px; border-radius: 24px;
   border: 1px solid var(--border); background: var(--surface);
   color: var(--text-secondary); font-size: 12px; font-weight: 500;
   cursor: pointer; transition: all var(--transition);
+  min-width: 80px;
 }
 .role-btn.active { background: var(--blue-light); border-color: var(--blue); color: var(--blue); font-weight: 600; }
 .role-btn:hover:not(.active) { background: var(--bg); }
@@ -450,7 +524,7 @@ textarea { resize: vertical; min-height: 80px; }
 .empty-state h3 { font-size: 15px; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
 
 /* ── Toast ── */
-.toast-container { position: fixed; top: 80px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+.toast-container { position: fixed; top: 80px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; max-width: calc(100vw - 40px); }
 
 .toast {
   background: #323232;
@@ -459,6 +533,7 @@ textarea { resize: vertical; min-height: 80px; }
   padding: 12px 18px;
   display: flex; align-items: center; gap: 10px;
   min-width: 260px;
+  max-width: 360px;
   animation: slideIn 0.25s ease;
   box-shadow: var(--shadow-lg);
   font-size: 13px;
@@ -487,3 +562,129 @@ textarea { resize: vertical; min-height: 80px; }
 
 /* ── Login bg blobs — removed for minimalist ── */
 .login-bg-blobs { display: none; }
+
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* ── Tablet (max 1024px) ── */
+@media (max-width: 1024px) {
+  .header { padding: 0 20px; }
+  .page-body { padding: 20px 24px; }
+
+  .dashboard-grid { grid-template-columns: 1fr; }
+
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+
+  .search-bar input { width: 140px; }
+
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+}
+
+/* ── Mobile (max 768px) — Sidebar becomes a drawer ── */
+@media (max-width: 768px) {
+  /* Sidebar: slide off-screen by default */
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+    z-index: 300;
+  }
+
+  /* Sidebar open state: slide into view */
+  .sidebar.sidebar--open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Show overlay when sidebar is open */
+  .sidebar-overlay { display: block; }
+
+  /* Show close button inside sidebar */
+  .sidebar-close-btn { display: flex; }
+
+  /* Show hamburger in header */
+  .hamburger-btn { display: flex; }
+
+  /* Main content: no left margin since sidebar is overlay */
+  .main-content { margin-left: 0 !important; }
+
+  /* Header */
+  .header { padding: 0 16px; gap: 8px; }
+  .header-title h1 { font-size: 16px; }
+  .header-title p { display: none; }
+
+  /* Hide search bar on mobile — keep icon only */
+  .search-bar { display: none; }
+
+  /* Page body */
+  .page-body { padding: 16px; }
+
+  /* Stats grid */
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .stat-card { padding: 14px; gap: 12px; }
+  .stat-icon { width: 40px; height: 40px; font-size: 18px; }
+  .stat-info .value { font-size: 20px; }
+
+  /* Dashboard */
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .chart-wrapper { height: 200px; }
+
+  /* Grids */
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+
+  /* Forms */
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.span-2 { grid-column: span 1; }
+
+  /* Page header */
+  .page-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .page-header > * { width: 100%; }
+
+  /* Cards */
+  .card { padding: 14px; }
+
+  /* Login */
+  .login-card { padding: 24px 20px; border-radius: 12px; }
+  .login-card .login-logo { margin-bottom: 20px; }
+
+  /* Modal */
+  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal {
+    border-radius: 16px 16px 0 0;
+    max-height: 90vh;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal-header { padding: 16px 20px; }
+  .modal-body { padding: 16px 20px; }
+  .modal-footer { padding: 12px 20px; }
+
+  /* Filter bar */
+  .filter-bar { gap: 8px; }
+  .filter-bar input,
+  .filter-bar select { min-width: 100%; flex: 1 1 100%; }
+  .filter-bar .btn { width: 100%; justify-content: center; }
+
+  /* Toast */
+  .toast-container { right: 12px; left: 12px; max-width: 100%; }
+  .toast { min-width: unset; max-width: 100%; width: 100%; }
+
+  /* Bed grid */
+  .bed-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 6px; }
+}
+
+/* ── Very small screens (max 480px) ── */
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-card { padding: 12px; }
+
+  .header-title h1 { font-size: 14px; }
+
+  .btn { padding: 7px 14px; font-size: 12px; }
+  .btn-sm { padding: 5px 10px; font-size: 11px; }
+}
