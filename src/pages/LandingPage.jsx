@@ -25,21 +25,44 @@ export default function LandingPage() {
     <div className="landing-page" style={{ minHeight: '100vh', background: '#fff', fontFamily: "'Inter', sans-serif" }}>
       <MouseParticles />
 
-      {/* ── Navbar ── */}
-      <nav className="landing-nav" style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid #e0e0e0', zIndex: 100, padding: '0 64px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 36, height: 36, background: '#1a73e8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏥</div>
-          <span style={{ fontSize: 18, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <button onClick={() => navigate('/login')} style={{ background: 'none', border: '1px solid #e0e0e0', borderRadius: 24, padding: '8px 20px', fontSize: 13, fontWeight: 500, color: '#5f6368', cursor: 'pointer', transition: 'all 0.15s' }}>
-            Sign In
-          </button>
-          <button onClick={() => navigate('/login')} style={{ background: '#1a73e8', border: 'none', borderRadius: 24, padding: '8px 20px', fontSize: 13, fontWeight: 500, color: '#fff', cursor: 'pointer' }}>
-            Get Started
-          </button>
-        </div>
-      </nav>
+      {/* ── Floating Navbar ── */}
+      <div className="landing-nav-wrapper" style={{ position: 'sticky', top: 24, zIndex: 100, padding: '0 24px', display: 'flex', justifyContent: 'center' }}>
+        <nav className="landing-nav-pill" style={{ 
+          background: '#fff', 
+          borderRadius: 40, 
+          boxShadow: '0 4px 20px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)', 
+          padding: '8px 12px 8px 24px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          width: '100%',
+          maxWidth: 960,
+          border: '1px solid rgba(0,0,0,0.04)'
+        }}>
+          {/* Logo */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+            <div style={{ width: 28, height: 28, background: '#f0f2f5', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>🏥</div>
+            <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>Hospira</span>
+          </div>
+
+          {/* Desktop Links */}
+          <div className="landing-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+            {['Products', 'Resources', 'Pricing', 'Enterprise'].map(link => (
+              <span key={link} style={{ fontSize: 14, color: '#555', cursor: 'pointer', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4 }}>
+                {link} {['Products', 'Resources'].includes(link) && <span style={{ fontSize: 10, opacity: 0.5 }}>▼</span>}
+              </span>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <span onClick={() => navigate('/login')} className="landing-nav-signin" style={{ fontSize: 14, color: '#555', fontWeight: 500, cursor: 'pointer' }}>Sign in</span>
+            <button onClick={() => navigate('/login')} style={{ background: '#111', color: '#fff', border: 'none', borderRadius: 24, padding: '10px 20px', fontSize: 14, fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s' }} onMouseEnter={e => e.target.style.background='#333'} onMouseLeave={e => e.target.style.background='#111'}>
+              Get started
+            </button>
+          </div>
+        </nav>
+      </div>
 
       {/* ── Hero ── */}
       <section className="landing-hero" style={{ padding: '96px 64px 80px', textAlign: 'center', background: 'linear-gradient(180deg, #f8f9ff 0%, #fff 100%)' }}>
