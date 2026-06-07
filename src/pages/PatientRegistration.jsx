@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdArrowBack, MdPerson, MdEmail, MdPhone, MdLock, MdVisibility, MdVisibilityOff, MdLocationOn } from 'react-icons/md';
+import { patientQueries, authQueries } from '../db/queries';
 
 export default function PatientRegistration() {
   const navigate = useNavigate();
@@ -42,39 +43,40 @@ export default function PatientRegistration() {
     return e;
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    
-    setIsSubmitting(true);
+
     try {
-      const response = await fetch('/api/register/patient', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.fullName,
-          email: form.email,
-          phone: form.phone,
-          password: form.password,
-          gender: form.gender,
-          blood_group: 'Unknown',
-          address: form.address,
-          medical_history: 'None',
-          age: new Date().getFullYear() - new Date(form.dob).getFullYear()
-        })
+      // Check if email already registered
+      if (authQueries.emailExists(form.email)) {
+        setErrors({ submit: 'This email is already registered. Please sign in.' });
+        return;
+      }
+
+      const age = new Date().getFullYear() - new Date(form.dob).getFullYear();
+
+      // Save patient record
+      patientQueries.create({
+        name: form.fullName,
+        age,
+        gender: form.gender,
+        blood_group: 'Unknown',
+        phone: form.phone,
+        email: form.email,
+        address: form.address,
+        medical_history: 'None',
+        status: 'Active',
       });
-      
-      if (!response.ok) throw new Error('Registration failed');
-      
+
+      // Create login account
+      authQueries.register(form.fullName, form.email, form.password, 'Patient');
+
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      setErrors({ submit: 'Failed to connect to the server. Is the backend running?' });
-    } finally {
-      setIsSubmitting(false);
+      setErrors({ submit: 'Registration failed. Please try again.' });
     }
   };
 
@@ -347,7 +349,7 @@ export default function PatientRegistration() {
               }}
               onMouseEnter={e => e.target.style.background = '#1557b0'}
               onMouseLeave={e => e.target.style.background = '#1a73e8'}
-              disabled={isSubmitting}
+              disabled={false}
             >
               {isSubmitting ? 'Registering...' : 'Register'}
             </button>

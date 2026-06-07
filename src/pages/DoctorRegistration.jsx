@@ -4,6 +4,7 @@ import {
   MdPerson, MdEmail, MdPhone, MdArrowBack,
   MdArrowDropDown, MdAccessTime, MdAttachMoney
 } from 'react-icons/md';
+import { doctorQueries, authQueries } from '../db/queries';
 
 const SPECIALIZATIONS = [
   'Cardiology',
@@ -75,43 +76,39 @@ export default function DoctorRegistration() {
     return e;
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    
-    setIsSubmitting(true);
+
     try {
-      const schedule = `${form.availableDays.join(',')} ${form.timeFrom}-${form.timeTo}`;
-      const response = await fetch('/api/register/doctor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.fullName,
-          email: form.email,
-          phone: form.phone,
-          password: form.password,
-          specialization: form.specialization,
-          department: form.specialization,
-          schedule: schedule,
-          fee: +form.consultationFee
-        })
-      });
-      
-      if (response.status === 409) {
-        setErrors({ submit: 'An account with this email already exists' });
+      // Check if email already registered
+      if (authQueries.emailExists(form.email)) {
+        setErrors({ submit: 'An account with this email already exists. Please sign in.' });
         return;
       }
-      if (!response.ok) throw new Error('Registration failed');
-      
+
+      const schedule = `${form.availableDays.join(',')} ${form.timeFrom}-${form.timeTo}`;
+
+      // Save doctor record
+      doctorQueries.create({
+        name: `Dr. ${form.fullName}`,
+        specialization: form.specialization,
+        department: form.specialization,
+        phone: form.phone,
+        email: form.email,
+        schedule,
+        fee: +form.consultationFee,
+        status: 'Active',
+      });
+
+      // Create login account with Doctor role
+      authQueries.register(`Dr. ${form.fullName}`, form.email, form.password, 'Doctor');
+
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      setErrors({ submit: 'Failed to connect to the server. Is the backend running?' });
-    } finally {
-      setIsSubmitting(false);
+      setErrors({ submit: 'Registration failed. Please try again.' });
     }
   };
 

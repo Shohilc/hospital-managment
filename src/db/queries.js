@@ -21,7 +21,12 @@ function run(sql, params = []) {
 // ─── AUTH ──────────────────────────────────────────────────────
 export const authQueries = {
   login: (email, password) =>
-    execQuery('SELECT * FROM users WHERE email=? AND password=?', [email, password])[0] || null
+    execQuery('SELECT * FROM users WHERE email=? AND password=?', [email, password])[0] || null,
+  emailExists: (email) =>
+    execQuery('SELECT id FROM users WHERE email=?', [email]).length > 0,
+  register: (name, email, password, role) => {
+    run('INSERT INTO users(name,email,password,role) VALUES(?,?,?,?)', [name, email, password, role]);
+  }
 };
 
 // ─── PATIENTS ──────────────────────────────────────────────────
