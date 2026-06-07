@@ -5,10 +5,11 @@
 /* ============================================================
    Hospira HMS — Google Material Minimalist Design
    Fully Responsive: Mobile / Tablet / Desktop
+   Dark Mode & Light Mode Support
    ============================================================ */
 
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* (reset merged below with transition rule) */
 
 :root {
   --bg: #f8f9fa;
@@ -42,6 +43,45 @@
   --transition: 0.15s ease;
 }
 
+/* ── Dark Mode Variables ── */
+[data-theme="dark"] {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --border: #2d3142;
+  --border-light: #252836;
+
+  --blue: #8ab4f8;
+  --blue-light: rgba(138,180,248,0.15);
+  --blue-hover: #aecbfa;
+  --green: #81c995;
+  --green-light: rgba(129,201,149,0.15);
+  --red: #f28b82;
+  --red-light: rgba(242,139,130,0.15);
+  --amber: #fdd663;
+  --amber-light: rgba(253,214,99,0.15);
+  --teal: #34a853;
+  --purple: #d7aefb;
+
+  --text-primary: #e8eaed;
+  --text-secondary: #9aa0a6;
+  --text-muted: #5f6368;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 2px 6px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* Smooth theme transition on all elements */
+html {
+  color-scheme: light dark;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
 html, body, #root { height: 100%; }
 body {
   font-family: 'Inter', -apple-system, sans-serif;
@@ -54,6 +94,7 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #dadce0; border-radius: 4px; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #3c4055; }
 
 /* ── Layout ── */
 .app-shell { display: flex; height: 100vh; overflow: hidden; }
@@ -233,6 +274,13 @@ body {
 }
 .header-btn:hover { background: var(--bg); }
 
+/* Theme toggle spin animation */
+.theme-toggle-btn { font-size: 20px; }
+.theme-toggle-btn svg {
+  transition: transform 0.4s ease, color 0.25s ease;
+}
+.theme-toggle-btn:hover svg { transform: rotate(20deg) scale(1.1); }
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -348,7 +396,7 @@ td {
 
 tbody tr { transition: background var(--transition); }
 tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover { background: #f8f9fa; }
+tbody tr:hover { background: var(--border-light); }
 
 /* ── Badges ── */
 .badge {

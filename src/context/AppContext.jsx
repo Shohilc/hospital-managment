@@ -11,6 +11,19 @@ export function AppProvider({ children }) {
   });
   const [toasts, setToasts] = useState([]);
 
+  // ── Theme ──
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('hms_theme') || 'light';
+  });
+
+  // Apply theme to <html> whenever it changes
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('hms_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(t => (t === 'light' ? 'dark' : 'light'));
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js';
@@ -38,7 +51,7 @@ export function AppProvider({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{ dbReady, user, login, logout, toasts, addToast }}>
+    <AppContext.Provider value={{ dbReady, user, login, logout, toasts, addToast, theme, toggleTheme }}>
       {children}
     </AppContext.Provider>
   );
