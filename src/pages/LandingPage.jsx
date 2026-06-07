@@ -22,11 +22,11 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', fontFamily: "'Inter', sans-serif" }}>
+    <div className="landing-page" style={{ minHeight: '100vh', background: '#fff', fontFamily: "'Inter', sans-serif" }}>
       <MouseParticles />
 
       {/* ── Navbar ── */}
-      <nav style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid #e0e0e0', zIndex: 100, padding: '0 64px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <nav className="landing-nav" style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid #e0e0e0', zIndex: 100, padding: '0 64px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 36, height: 36, background: '#1a73e8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏥</div>
           <span style={{ fontSize: 18, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
@@ -42,11 +42,11 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ── */}
-      <section style={{ padding: '96px 64px 80px', textAlign: 'center', background: 'linear-gradient(180deg, #f8f9ff 0%, #fff 100%)' }}>
+      <section className="landing-hero" style={{ padding: '96px 64px 80px', textAlign: 'center', background: 'linear-gradient(180deg, #f8f9ff 0%, #fff 100%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#e8f0fe', borderRadius: 24, padding: '6px 16px', marginBottom: 24, fontSize: 12, fontWeight: 600, color: '#1a73e8' }}>
           ✨ Modern Hospital Management
         </div>
-        <h1 style={{ fontSize: 52, fontWeight: 700, color: '#202124', lineHeight: 1.15, marginBottom: 20, maxWidth: 700, margin: '0 auto 20px' }}>
+        <h1 className="landing-hero-h1" style={{ fontSize: 52, fontWeight: 700, color: '#202124', lineHeight: 1.15, marginBottom: 20, maxWidth: 700, margin: '0 auto 20px' }}>
           Manage Your Hospital,{' '}
           <span style={{ color: '#1a73e8' }}>Smarter</span>
         </h1>
@@ -63,7 +63,7 @@ export default function LandingPage() {
         </div>
 
         {/* Hero card preview */}
-        <div style={{ marginTop: 64, background: '#f8f9fa', border: '1px solid #e0e0e0', borderRadius: 16, padding: '32px', maxWidth: 800, margin: '64px auto 0', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+        <div className="landing-stats-grid" style={{ marginTop: 64, background: '#f8f9fa', border: '1px solid #e0e0e0', borderRadius: 16, padding: '32px', maxWidth: 800, margin: '64px auto 0', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
           {[
             { label: 'Total Patients', value: '1,284', color: '#1a73e8' },
             { label: 'Doctors Active', value: '48', color: '#1e8e3e' },
@@ -79,8 +79,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats ── */}
-      <section style={{ background: '#1a73e8', padding: '48px 64px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+      <section className="landing-stats-banner" style={{ background: '#1a73e8', padding: '48px 64px' }}>
+        <div className="landing-stats-banner-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 32, maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           {STATS.map((s, i) => (
             <div key={i}>
               <div style={{ fontSize: 36, fontWeight: 700, color: '#fff' }}>{s.value}</div>
@@ -91,12 +91,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ── */}
-      <section style={{ padding: '80px 64px', background: '#fff' }}>
+      <section className="landing-features-section" style={{ padding: '80px 64px', background: '#fff' }}>
         <div style={{ textAlign: 'center', marginBottom: 56 }}>
           <h2 style={{ fontSize: 36, fontWeight: 700, color: '#202124', marginBottom: 12 }}>Everything You Need</h2>
           <p style={{ fontSize: 16, color: '#5f6368' }}>A complete suite of tools designed for modern hospitals.</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, maxWidth: 1000, margin: '0 auto' }}>
+        <div className="landing-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, maxWidth: 1000, margin: '0 auto' }}>
           {FEATURES.map((f, i) => (
             <div key={i} style={{ background: '#f8f9fa', border: '1px solid #e0e0e0', borderRadius: 12, padding: 28, transition: 'box-shadow 0.15s' }}
               onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 12px rgba(60,64,67,0.15)'}
@@ -111,8 +111,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Why Hospira ── */}
-      <section style={{ padding: '80px 64px', background: '#f8f9fa' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+      <section className="landing-why-section" style={{ padding: '80px 64px', background: '#f8f9fa' }}>
+        <div className="landing-why-grid" style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
           <div>
             <h2 style={{ fontSize: 32, fontWeight: 700, color: '#202124', marginBottom: 20, lineHeight: 1.3 }}>Why hospitals choose Hospira</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -143,10 +143,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ padding: '80px 64px', textAlign: 'center', background: '#fff' }}>
+      <section className="landing-cta" style={{ padding: '80px 64px', textAlign: 'center', background: '#fff' }}>
         <h2 style={{ fontSize: 36, fontWeight: 700, color: '#202124', marginBottom: 16 }}>Ready to get started?</h2>
         <p style={{ fontSize: 16, color: '#5f6368', marginBottom: 36 }}>Join hospitals already using Hospira to streamline operations.</p>
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+        <div className="landing-cta-buttons" style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
           <button onClick={() => navigate('/register/patient')} style={{ background: '#fff', color: '#1a73e8', border: '1px solid #1a73e8', borderRadius: 24, padding: '12px 28px', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}>Register as Patient</button>
           <button onClick={() => navigate('/register/doctor')} style={{ background: '#fff', color: '#1e8e3e', border: '1px solid #1e8e3e', borderRadius: 24, padding: '12px 28px', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}>Register as Doctor</button>
           <button onClick={() => navigate('/login')} style={{ background: '#1a73e8', color: '#fff', border: 'none', borderRadius: 24, padding: '12px 28px', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}>Sign In Now</button>
@@ -154,7 +154,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ background: '#f8f9fa', borderTop: '1px solid #e0e0e0', padding: '24px 64px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <footer className="landing-footer" style={{ background: '#f8f9fa', borderTop: '1px solid #e0e0e0', padding: '24px 64px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 28, height: 28, background: '#1a73e8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>🏥</div>
           <span style={{ fontSize: 13, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>

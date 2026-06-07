@@ -814,6 +814,21 @@ textarea { resize: vertical; min-height: 80px; }
 
   /* Bed grid */
   .bed-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 6px; }
+
+  /* ── Landing Page Responsive ── */
+  .landing-nav { padding: 0 20px !important; }
+  .landing-hero { padding: 60px 20px 40px !important; }
+  .landing-hero-h1 { font-size: 36px !important; }
+  .landing-stats-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; margin-top: 40px !important; }
+  .landing-stats-banner { padding: 40px 20px !important; }
+  .landing-stats-banner-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+  .landing-features-section { padding: 40px 20px !important; }
+  .landing-features-grid { grid-template-columns: 1fr !important; }
+  .landing-why-section { padding: 40px 20px !important; }
+  .landing-why-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .landing-cta { padding: 60px 20px !important; }
+  .landing-cta-buttons { flex-direction: column !important; width: 100%; align-items: stretch !important; }
+  .landing-footer { padding: 24px 20px !important; flex-direction: column !important; gap: 12px !important; }
 }
 
 /* ── Very small screens (max 480px) ── */
@@ -825,4 +840,7 @@ textarea { resize: vertical; min-height: 80px; }
 
   .btn { padding: 7px 14px; font-size: 12px; }
   .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+  .landing-stats-grid { grid-template-columns: 1fr !important; }
+  .landing-stats-banner-grid { grid-template-columns: 1fr !important; }
 }
