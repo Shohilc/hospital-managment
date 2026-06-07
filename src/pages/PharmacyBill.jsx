@@ -23,7 +23,7 @@ export default function PharmacyBill() {
       <nav className="no-print" style={{ background:'#fff', borderBottom:'1px solid #e0e0e0', height:56, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 32px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:8, cursor:'pointer' }} onClick={() => navigate('/')}>
           <div style={{ width:30, height:30, background:'#1a73e8', borderRadius:7, display:'flex', alignItems:'center', justifyContent:'center', fontSize:16 }}>🏥</div>
-          <span style={{ fontSize:15, fontWeight:600, color:'#202124' }}>MediCore HMS</span>
+          <span style={{ fontSize:15, fontWeight:600, color:'#202124' }}>Hospira HMS</span>
         </div>
         <div style={{ display:'flex', gap:10 }}>
           <button onClick={() => navigate('/pharmacy-billing')} style={{ background:'none', border:'1px solid #e0e0e0', borderRadius:24, padding:'7px 16px', fontSize:13, color:'#5f6368', cursor:'pointer', display:'flex', alignItems:'center', gap:5 }}>
@@ -57,7 +57,7 @@ export default function PharmacyBill() {
                   <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:6 }}>
                     <div style={{ width:38, height:38, background:'rgba(255,255,255,0.2)', borderRadius:9, display:'flex', alignItems:'center', justifyContent:'center', fontSize:20 }}>🏥</div>
                     <div>
-                      <div style={{ fontSize:18, fontWeight:700 }}>MediCore HMS</div>
+                      <div style={{ fontSize:18, fontWeight:700 }}>Hospira HMS</div>
                       <div style={{ fontSize:12, opacity:0.8 }}>Pharmacy Department</div>
                     </div>
                   </div>
@@ -136,7 +136,7 @@ export default function PharmacyBill() {
 
               {/* Footer */}
               <div style={{ textAlign:'center', borderTop:'1px dashed #e0e0e0', paddingTop:18 }}>
-                <div style={{ fontSize:13, fontWeight:500, color:'#202124', marginBottom:4 }}>Thank you for choosing MediCore HMS</div>
+                <div style={{ fontSize:13, fontWeight:500, color:'#202124', marginBottom:4 }}>Thank you for choosing Hospira HMS</div>
                 <div style={{ fontSize:11, color:'#9aa0a6' }}>This is a computer-generated bill and does not require a signature.</div>
               </div>
 

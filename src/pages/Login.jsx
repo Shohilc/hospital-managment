@@ -31,17 +31,52 @@ export default function Login() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const handleSubmit = (e) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.role) { setError('Please select your role.'); return; }
-    const user = authQueries.login(form.email, form.password);
-    if (user) {
-      if (form.rememberMe) localStorage.setItem('hms_remember', form.email);
-      login(user);
-      navigate('/dashboard');
-    } else {
-      setError('Invalid email or password. Please try again.');
+    
+    setIsLoading(true);
+    try {
+      // Try backend API first
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email, password: form.password })
+      });
+      
+      if (response.ok) {
+        const user = await response.json();
+        if (form.rememberMe) localStorage.setItem('hms_remember', form.email);
+        login(user);
+        navigate('/dashboard');
+        return;
+      }
+      
+      if (response.status === 401) {
+        // API is reachable but credentials are wrong — also try local DB
+      }
+    } catch (err) {
+      // Backend not available — fall through to local SQLite
+      console.log('Backend not available, using local database...');
     }
+    
+    // Fallback: try local SQLite database
+    try {
+      const user = authQueries.login(form.email, form.password);
+      if (user) {
+        if (form.rememberMe) localStorage.setItem('hms_remember', form.email);
+        login(user);
+        navigate('/dashboard');
+        return;
+      }
+    } catch (err) {
+      console.log('Local DB query failed:', err);
+    }
+    
+    setError('Invalid email or password. Please try again.');
+    setIsLoading(false);
   };
 
   const f = (k, v) => { setForm(p => ({ ...p, [k]: v })); setError(''); };
@@ -66,7 +101,7 @@ export default function Login() {
       <nav style={{ background: '#fff', borderBottom: '1px solid #e0e0e0', padding: '0 32px', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => navigate('/')}>
           <div style={{ width: 30, height: 30, background: '#1a73e8', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🏥</div>
-          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>MediCore HMS</span>
+          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
         </div>
         <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', color: '#5f6368', fontSize: 13, cursor: 'pointer' }}>← Back to Home</button>
       </nav>
@@ -79,7 +114,7 @@ export default function Login() {
           <div style={{ textAlign: 'center', marginBottom: 32 }}>
             <div style={{ width: 56, height: 56, background: '#1a73e8', borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, margin: '0 auto 16px' }}>🏥</div>
             <h1 style={{ fontSize: 22, fontWeight: 600, color: '#202124', marginBottom: 6 }}>Welcome back</h1>
-            <p style={{ fontSize: 13, color: '#9aa0a6' }}>Sign in to MediCore HMS</p>
+            <p style={{ fontSize: 13, color: '#9aa0a6' }}>Sign in to Hospira HMS</p>
           </div>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>

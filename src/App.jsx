@@ -15,6 +15,9 @@ import BookAppointment from './pages/BookAppointment';
 import AppointmentList from './pages/AppointmentList';
 import PharmacyBilling from './pages/PharmacyBilling';
 import PharmacyBill from './pages/PharmacyBill';
+import BillingGenerate from './pages/BillingGenerate';
+import BillingPayment from './pages/BillingPayment';
+import BillingInvoice from './pages/BillingInvoice';
 import Dashboard from './pages/Dashboard';
 import Patients from './pages/Patients';
 import Doctors from './pages/Doctors';
@@ -40,7 +43,7 @@ const PAGE_TITLES = {
 
 function ProtectedLayout() {
   const path = window.location.pathname;
-  const meta = PAGE_TITLES[path] || { title: 'MediCore HMS', sub: '' };
+  const meta = PAGE_TITLES[path] || { title: 'Hospira HMS', sub: '' };
 
   return (
     <div className="app-shell">
@@ -58,6 +61,19 @@ function ProtectedLayout() {
             <Route path="/lab" element={<Lab />} />
             <Route path="/billing" element={<Billing />} />
             <Route path="/staff" element={<Staff />} />
+            {/* Billing module */}
+            <Route path="/billing-generate" element={<BillingGenerate />} />
+            <Route path="/billing-payment"  element={<BillingPayment />} />
+            <Route path="/billing-invoice"  element={<BillingInvoice />} />
+            {/* Pharmacy module */}
+            <Route path="/pharmacy-billing" element={<PharmacyBilling />} />
+            <Route path="/pharmacy-bill"    element={<PharmacyBill />} />
+            {/* Patient & appointment module */}
+            <Route path="/patient-register"   element={<PatientModuleRegistration />} />
+            <Route path="/patient-profile"    element={<PatientProfile />} />
+            <Route path="/book-appointment"   element={<BookAppointment />} />
+            <Route path="/doctor-dashboard"   element={<DoctorDashboard />} />
+            <Route path="/doctor-list"        element={<DoctorList />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </div>
@@ -71,7 +87,7 @@ function LoadingScreen() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', flexDirection: 'column', gap: 16, background: '#f8f9fa' }}>
       <div style={{ width: 52, height: 52, background: '#1a73e8', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26 }}>🏥</div>
-      <p style={{ color: '#9aa0a6', fontSize: 14, fontWeight: 400 }}>Initializing MediCore HMS...</p>
+      <p style={{ color: '#9aa0a6', fontSize: 14, fontWeight: 400 }}>Initializing Hospira HMS...</p>
     </div>
   );
 }
@@ -95,6 +111,9 @@ function PublicRoutes() {
         <Route path="/appointments" element={<AppointmentList />} />
         <Route path="/pharmacy-billing" element={<PharmacyBilling />} />
         <Route path="/pharmacy-bill" element={<PharmacyBill />} />
+        <Route path="/billing-generate" element={<BillingGenerate />} />
+        <Route path="/billing-payment" element={<BillingPayment />} />
+        <Route path="/billing-invoice" element={<BillingInvoice />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>

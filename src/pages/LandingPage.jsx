@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { MdLocalHospital, MdPeople, MdCalendarToday, MdLocalPharmacy, MdScience, MdReceiptLong, MdArrowForward, MdCheck } from 'react-icons/md';
+import MouseParticles from '../components/MouseParticles';
 
 const FEATURES = [
   { icon: <MdPeople />, title: 'Patient Management', desc: 'Register, track, and manage all patient records with complete medical history.' },
@@ -14,7 +15,7 @@ const STATS = [
   { value: '10,000+', label: 'Patients Managed' },
   { value: '500+', label: 'Doctors Onboarded' },
   { value: '98%', label: 'Uptime Guaranteed' },
-  { value: '50+', label: 'Hospitals Using MediCore' },
+  { value: '50+', label: 'Hospitals Using Hospira' },
 ];
 
 export default function LandingPage() {
@@ -22,12 +23,13 @@ export default function LandingPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', fontFamily: "'Inter', sans-serif" }}>
+      <MouseParticles />
 
       {/* ── Navbar ── */}
       <nav style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid #e0e0e0', zIndex: 100, padding: '0 64px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 36, height: 36, background: '#1a73e8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🏥</div>
-          <span style={{ fontSize: 18, fontWeight: 600, color: '#202124' }}>MediCore HMS</span>
+          <span style={{ fontSize: 18, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <button onClick={() => navigate('/login')} style={{ background: 'none', border: '1px solid #e0e0e0', borderRadius: 24, padding: '8px 20px', fontSize: 13, fontWeight: 500, color: '#5f6368', cursor: 'pointer', transition: 'all 0.15s' }}>
@@ -49,7 +51,7 @@ export default function LandingPage() {
           <span style={{ color: '#1a73e8' }}>Smarter</span>
         </h1>
         <p style={{ fontSize: 18, color: '#5f6368', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.7 }}>
-          MediCore HMS brings together patients, doctors, appointments, pharmacy, lab, and billing into one seamless platform.
+          Hospira HMS brings together patients, doctors, appointments, pharmacy, lab, and billing into one seamless platform.
         </p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <button onClick={() => navigate('/login')} style={{ background: '#1a73e8', color: '#fff', border: 'none', borderRadius: 24, padding: '14px 32px', fontSize: 15, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -108,11 +110,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Why MediCore ── */}
+      {/* ── Why Hospira ── */}
       <section style={{ padding: '80px 64px', background: '#f8f9fa' }}>
         <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
           <div>
-            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#202124', marginBottom: 20, lineHeight: 1.3 }}>Why hospitals choose MediCore</h2>
+            <h2 style={{ fontSize: 32, fontWeight: 700, color: '#202124', marginBottom: 20, lineHeight: 1.3 }}>Why hospitals choose Hospira</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               {['Real-time bed & ward tracking', 'Integrated billing across all departments', 'Role-based access for Admin, Doctor & Staff', 'SQLite-powered local database — no server needed', 'Clean, fast, modern interface'].map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -143,7 +145,7 @@ export default function LandingPage() {
       {/* ── CTA ── */}
       <section style={{ padding: '80px 64px', textAlign: 'center', background: '#fff' }}>
         <h2 style={{ fontSize: 36, fontWeight: 700, color: '#202124', marginBottom: 16 }}>Ready to get started?</h2>
-        <p style={{ fontSize: 16, color: '#5f6368', marginBottom: 36 }}>Join hospitals already using MediCore to streamline operations.</p>
+        <p style={{ fontSize: 16, color: '#5f6368', marginBottom: 36 }}>Join hospitals already using Hospira to streamline operations.</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
           <button onClick={() => navigate('/register/patient')} style={{ background: '#fff', color: '#1a73e8', border: '1px solid #1a73e8', borderRadius: 24, padding: '12px 28px', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}>Register as Patient</button>
           <button onClick={() => navigate('/register/doctor')} style={{ background: '#fff', color: '#1e8e3e', border: '1px solid #1e8e3e', borderRadius: 24, padding: '12px 28px', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}>Register as Doctor</button>
@@ -155,9 +157,9 @@ export default function LandingPage() {
       <footer style={{ background: '#f8f9fa', borderTop: '1px solid #e0e0e0', padding: '24px 64px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 28, height: 28, background: '#1a73e8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>🏥</div>
-          <span style={{ fontSize: 13, fontWeight: 600, color: '#202124' }}>MediCore HMS</span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
         </div>
-        <p style={{ fontSize: 12, color: '#9aa0a6' }}>© 2026 MediCore HMS. All rights reserved.</p>
+        <p style={{ fontSize: 12, color: '#9aa0a6' }}>© 2026 Hospira HMS. All rights reserved.</p>
       </footer>
     </div>
   );

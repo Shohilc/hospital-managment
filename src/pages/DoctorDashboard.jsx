@@ -79,7 +79,7 @@ export default function DoctorDashboard() {
       <nav style={{ background: '#fff', borderBottom: '1px solid #e0e0e0', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 28px', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 30, height: 30, background: '#1a73e8', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15 }}>🏥</div>
-          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>MediCore HMS</span>
+          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
           <span style={{ fontSize: 12, color: '#9aa0a6', marginLeft: 6, background: '#f1f3f4', padding: '3px 10px', borderRadius: 20 }}>Doctor Portal</span>
         </div>
 

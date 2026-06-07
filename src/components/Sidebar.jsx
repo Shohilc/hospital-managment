@@ -34,7 +34,7 @@ export default function Sidebar() {
       <div className="sidebar-logo">
         <div className="logo-icon">🏥</div>
         <div className="logo-text">
-          <h2>MediCore</h2>
+          <h2>Hospira</h2>
           <span>Hospital Management</span>
         </div>
       </div>

@@ -29,6 +29,8 @@ export default function DoctorRegistration() {
     fullName: '',
     email: '',
     phone: '',
+    password: '',
+    confirmPassword: '',
     specialization: '',
     qualification: '',
     experience: '',
@@ -63,17 +65,54 @@ export default function DoctorRegistration() {
     else if (isNaN(form.experience) || +form.experience < 0) e.experience = 'Enter a valid number';
     if (!form.consultationFee) e.consultationFee = 'Consultation fee is required';
     else if (isNaN(form.consultationFee) || +form.consultationFee < 0) e.consultationFee = 'Enter a valid amount';
+    if (!form.password) e.password = 'Password is required';
+    else if (form.password.length < 8) e.password = 'Password must be at least 8 characters';
+    if (!form.confirmPassword) e.confirmPassword = 'Please confirm your password';
+    else if (form.password !== form.confirmPassword) e.confirmPassword = 'Passwords do not match';
     if (form.availableDays.length === 0) e.availableDays = 'Select at least one available day';
     if (!form.timeFrom || !form.timeTo) e.timing = 'Please set available timing';
     else if (form.timeFrom >= form.timeTo) e.timing = 'End time must be after start time';
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    setSubmitted(true);
+    
+    setIsSubmitting(true);
+    try {
+      const schedule = `${form.availableDays.join(',')} ${form.timeFrom}-${form.timeTo}`;
+      const response = await fetch('/api/register/doctor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.fullName,
+          email: form.email,
+          phone: form.phone,
+          password: form.password,
+          specialization: form.specialization,
+          department: form.specialization,
+          schedule: schedule,
+          fee: +form.consultationFee
+        })
+      });
+      
+      if (response.status === 409) {
+        setErrors({ submit: 'An account with this email already exists' });
+        return;
+      }
+      if (!response.ok) throw new Error('Registration failed');
+      
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setErrors({ submit: 'Failed to connect to the server. Is the backend running?' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // ── Shared styles ──
@@ -106,7 +145,7 @@ export default function DoctorRegistration() {
           <button onClick={() => navigate('/login')} style={{ background: '#1a73e8', color: '#fff', border: 'none', borderRadius: 24, padding: '12px 32px', fontSize: 14, fontWeight: 600, cursor: 'pointer', width: '100%', marginBottom: 10 }}>
             Go to Login
           </button>
-          <button onClick={() => { setSubmitted(false); setForm({ fullName:'',email:'',phone:'',specialization:'',qualification:'',experience:'',consultationFee:'',availableDays:[],timeFrom:'09:00',timeTo:'17:00' }); setErrors({}); }} style={{ background: 'none', border: 'none', color: '#5f6368', fontSize: 13, cursor: 'pointer' }}>
+          <button onClick={() => { setSubmitted(false); setForm({ fullName:'',email:'',phone:'',password:'',confirmPassword:'',specialization:'',qualification:'',experience:'',consultationFee:'',availableDays:[],timeFrom:'09:00',timeTo:'17:00' }); setErrors({}); }} style={{ background: 'none', border: 'none', color: '#5f6368', fontSize: 13, cursor: 'pointer' }}>
             Register another doctor
           </button>
         </div>
@@ -121,7 +160,7 @@ export default function DoctorRegistration() {
       <nav style={{ background: '#fff', borderBottom: '1px solid #e0e0e0', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 32px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => navigate('/')}>
           <div style={{ width: 30, height: 30, background: '#1a73e8', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🏥</div>
-          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>MediCore HMS</span>
+          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
         </div>
         <button onClick={() => navigate('/login')} style={{ background: 'none', border: 'none', color: '#5f6368', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
           <MdArrowBack style={{ fontSize: 16 }} /> Back to Login
@@ -136,7 +175,7 @@ export default function DoctorRegistration() {
           <div style={{ textAlign: 'center', marginBottom: 28 }}>
             <div style={{ width: 52, height: 52, background: '#e6f4ea', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, margin: '0 auto 14px' }}>👨‍⚕️</div>
             <h1 style={{ fontSize: 24, fontWeight: 600, color: '#202124', marginBottom: 6 }}>Doctor Registration</h1>
-            <p style={{ fontSize: 13, color: '#9aa0a6' }}>Fill in your details to join MediCore HMS as a medical professional</p>
+            <p style={{ fontSize: 13, color: '#9aa0a6' }}>Fill in your details to join Hospira HMS as a medical professional</p>
           </div>
 
           <form
@@ -195,6 +234,34 @@ export default function DoctorRegistration() {
                 />
               </div>
               {errMsg('phone')}
+            </div>
+
+            {/* Password */}
+            <div>
+              {lbl('Password', true)}
+              <input
+                type="password"
+                value={form.password}
+                onChange={e => f('password', e.target.value)}
+                placeholder="Minimum 8 characters"
+                style={errors.password ? { ...baseNoIcon, borderColor: '#d93025', background: '#fffafa' } : baseNoIcon}
+                onFocus={focus} onBlur={blur('password')}
+              />
+              {errMsg('password')}
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              {lbl('Confirm Password', true)}
+              <input
+                type="password"
+                value={form.confirmPassword}
+                onChange={e => f('confirmPassword', e.target.value)}
+                placeholder="Re-enter your password"
+                style={errors.confirmPassword ? { ...baseNoIcon, borderColor: '#d93025', background: '#fffafa' } : baseNoIcon}
+                onFocus={focus} onBlur={blur('confirmPassword')}
+              />
+              {errMsg('confirmPassword')}
             </div>
 
             {/* Specialization */}
@@ -366,6 +433,8 @@ export default function DoctorRegistration() {
             >
               Submit Application
             </button>
+            
+            {errors.submit && <div style={{ color: '#d93025', fontSize: 13, textAlign: 'center', marginTop: 4 }}>{errors.submit}</div>}
 
             {/* Sign in link */}
             <p style={{ textAlign: 'center', fontSize: 13, color: '#5f6368', marginTop: -4 }}>

@@ -1,6 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ============================================================
-   MediCore HMS — Google Material Minimalist Design
+   Hospira HMS — Google Material Minimalist Design
    ============================================================ */
+
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

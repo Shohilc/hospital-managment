@@ -42,11 +42,40 @@ export default function PatientRegistration() {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    setSubmitted(true);
+    
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/register/patient', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.fullName,
+          email: form.email,
+          phone: form.phone,
+          password: form.password,
+          gender: form.gender,
+          blood_group: 'Unknown',
+          address: form.address,
+          medical_history: 'None',
+          age: new Date().getFullYear() - new Date(form.dob).getFullYear()
+        })
+      });
+      
+      if (!response.ok) throw new Error('Registration failed');
+      
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setErrors({ submit: 'Failed to connect to the server. Is the backend running?' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // ── Shared styles ──
@@ -103,7 +132,7 @@ export default function PatientRegistration() {
       <nav style={{ background: '#fff', borderBottom: '1px solid #e0e0e0', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 32px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }} onClick={() => navigate('/')}>
           <div style={{ width: 30, height: 30, background: '#1a73e8', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🏥</div>
-          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>MediCore HMS</span>
+          <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
         </div>
         <button
           onClick={() => navigate('/login')}
@@ -318,9 +347,12 @@ export default function PatientRegistration() {
               }}
               onMouseEnter={e => e.target.style.background = '#1557b0'}
               onMouseLeave={e => e.target.style.background = '#1a73e8'}
+              disabled={isSubmitting}
             >
-              Register
+              {isSubmitting ? 'Registering...' : 'Register'}
             </button>
+            
+            {errors.submit && <div style={{ color: '#d93025', fontSize: 13, textAlign: 'center', marginTop: 4 }}>{errors.submit}</div>}
 
             {/* Login link */}
             <p style={{ textAlign: 'center', fontSize: 13, color: '#5f6368', marginTop: -4 }}>

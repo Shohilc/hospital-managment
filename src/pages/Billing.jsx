@@ -65,11 +65,82 @@ export default function Billing() {
         ))}
       </div>
 
+      {/* ── Bill Payment Section ── */}
+      <div style={{ marginBottom:20 }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:12 }}>
+          <div>
+            <h3 style={{ fontSize:15, fontWeight:600, color:'var(--text)', margin:0 }}>💳 Bill Payment</h3>
+            <p style={{ fontSize:12, color:'var(--text-muted)', marginTop:3 }}>Generate, process and download patient invoices</p>
+          </div>
+          <button
+            className="btn btn-primary"
+            onClick={() => window.location.href = '/billing-generate'}
+            style={{ display:'flex', alignItems:'center', gap:6, fontSize:13 }}
+          >
+            + Generate New Bill
+          </button>
+        </div>
+
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14 }}>
+          {[
+            {
+              icon:'🧾',
+              title:'Generate Bill',
+              desc:'Create a new bill — consultation, medicines, discount & GST calculation',
+              btn:'Start Billing',
+              href:'/billing-generate',
+              color:'#1a73e8',
+              bg:'#e8f0fe',
+            },
+            {
+              icon:'💳',
+              title:'Process Payment',
+              desc:'Select payment method — Cash, UPI, Card, Net Banking or Insurance',
+              btn:'Go to Payment',
+              href:'/billing-payment',
+              color:'#1e8e3e',
+              bg:'#e6f4ea',
+            },
+            {
+              icon:'📄',
+              title:'Download Invoice',
+              desc:'View the final invoice and download as PDF or print for the patient',
+              btn:'View Invoice',
+              href:'/billing-invoice',
+              color:'#7b1fa2',
+              bg:'#f3e8fd',
+            },
+          ].map((card, i) => (
+            <div key={i} className="card"
+              style={{ padding:'20px 22px', display:'flex', flexDirection:'column', gap:12, cursor:'pointer', transition:'box-shadow 0.15s' }}
+              onMouseEnter={e => e.currentTarget.style.boxShadow='0 4px 16px rgba(60,64,67,0.14)'}
+              onMouseLeave={e => e.currentTarget.style.boxShadow=''}
+              onClick={() => window.location.href = card.href}
+            >
+              <div style={{ width:44, height:44, background:card.bg, borderRadius:12, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22 }}>
+                {card.icon}
+              </div>
+              <div>
+                <div style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:4 }}>{card.title}</div>
+                <div style={{ fontSize:12, color:'var(--text-muted)', lineHeight:1.6 }}>{card.desc}</div>
+              </div>
+              <button
+                onClick={e => { e.stopPropagation(); window.location.href = card.href; }}
+                style={{ alignSelf:'flex-start', background:card.color, color:'#fff', border:'none', borderRadius:20, padding:'6px 16px', fontSize:12, fontWeight:600, cursor:'pointer' }}
+              >
+                {card.btn} →
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="filter-bar">
         <select value={filter} onChange={e => setFilter(e.target.value)} id="bill-status-filter">
           <option value="">All Bills</option><option>Pending</option><option>Paid</option><option>Cancelled</option>
         </select>
       </div>
+
 
       <div className="card" style={{ padding:0 }}>
         <div className="table-container">

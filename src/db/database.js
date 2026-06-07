@@ -9,7 +9,7 @@ export async function initDB() {
     locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}`
   });
 
-  const saved = localStorage.getItem('medicore_db');
+  const saved = localStorage.getItem('hospira_db');
   if (saved) {
     const buf = Uint8Array.from(atob(saved), c => c.charCodeAt(0));
     db = new SQL.Database(buf);
@@ -29,7 +29,7 @@ export function saveDB() {
   if (!db) return;
   const data = db.export();
   const b64 = btoa(String.fromCharCode(...data));
-  localStorage.setItem('medicore_db', b64);
+  localStorage.setItem('hospira_db', b64);
 }
 
 function createSchema() {
@@ -97,17 +97,17 @@ function createSchema() {
 function seedData() {
   // Users
   db.run(`INSERT INTO users(name,email,password,role) VALUES
-    ('Dr. Admin','admin@medicore.com','admin123','Admin'),
-    ('Dr. Sarah Lee','doctor@medicore.com','doctor123','Doctor'),
-    ('Reception','reception@medicore.com','recep123','Receptionist')`);
+    ('Dr. Admin','admin@hospira.com','admin123','Admin'),
+    ('Dr. Sarah Lee','doctor@hospira.com','doctor123','Doctor'),
+    ('Reception','reception@hospira.com','recep123','Receptionist')`);
 
   // Doctors
   db.run(`INSERT INTO doctors(name,specialization,department,phone,email,schedule,fee) VALUES
-    ('Dr. James Wilson','Cardiology','Heart Care','9876543210','james@medicore.com','Mon-Fri 9AM-5PM',800),
-    ('Dr. Sarah Lee','Neurology','Brain & Spine','9876543211','sarah@medicore.com','Mon-Wed-Fri 10AM-4PM',1000),
-    ('Dr. Michael Brown','Orthopedics','Bone & Joint','9876543212','michael@medicore.com','Tue-Thu 9AM-3PM',700),
-    ('Dr. Priya Sharma','Pediatrics','Child Care','9876543213','priya@medicore.com','Mon-Sat 8AM-2PM',600),
-    ('Dr. Robert Chen','Dermatology','Skin Care','9876543214','robert@medicore.com','Wed-Fri 11AM-5PM',650)`);
+    ('Dr. James Wilson','Cardiology','Heart Care','9876543210','james@hospira.com','Mon-Fri 9AM-5PM',800),
+    ('Dr. Sarah Lee','Neurology','Brain & Spine','9876543211','sarah@hospira.com','Mon-Wed-Fri 10AM-4PM',1000),
+    ('Dr. Michael Brown','Orthopedics','Bone & Joint','9876543212','michael@hospira.com','Tue-Thu 9AM-3PM',700),
+    ('Dr. Priya Sharma','Pediatrics','Child Care','9876543213','priya@hospira.com','Mon-Sat 8AM-2PM',600),
+    ('Dr. Robert Chen','Dermatology','Skin Care','9876543214','robert@hospira.com','Wed-Fri 11AM-5PM',650)`);
 
   // Patients
   db.run(`INSERT INTO patients(name,age,gender,blood_group,phone,email,address,medical_history,status) VALUES
@@ -164,9 +164,9 @@ function seedData() {
 
   // Staff
   db.run(`INSERT INTO staff(name,role,department,phone,email,shift,status) VALUES
-    ('Nurse Mary','Head Nurse','General Ward','9876600001','mary@medicore.com','Morning','Active'),
-    ('Nurse John','Nurse','ICU','9876600002','john@medicore.com','Night','Active'),
-    ('Tom Admin','Admin Staff','Reception','9876600003','tom@medicore.com','Morning','Active'),
-    ('Lab Tech Raj','Lab Technician','Laboratory','9876600004','raj@medicore.com','Morning','Active'),
-    ('Pharmacy Rita','Pharmacist','Pharmacy','9876600005','rita@medicore.com','Evening','Active')`);
+    ('Nurse Mary','Head Nurse','General Ward','9876600001','mary@hospira.com','Morning','Active'),
+    ('Nurse John','Nurse','ICU','9876600002','john@hospira.com','Night','Active'),
+    ('Tom Admin','Admin Staff','Reception','9876600003','tom@hospira.com','Morning','Active'),
+    ('Lab Tech Raj','Lab Technician','Laboratory','9876600004','raj@hospira.com','Morning','Active'),
+    ('Pharmacy Rita','Pharmacist','Pharmacy','9876600005','rita@hospira.com','Evening','Active')`);
 }
