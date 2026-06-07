@@ -43,15 +43,29 @@ const PAGE_TITLES = {
 };
 
 function ProtectedLayout() {
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const [sidebarOpen, setSidebarOpen] = React.useState(false); // mobile drawer
+  const { sidebarCollapsed, toggleSidebarCollapsed } = useApp();
   const path = window.location.pathname;
   const meta = PAGE_TITLES[path] || { title: 'Hospira HMS', sub: '' };
 
+  // Desktop → toggle collapse; Mobile → toggle drawer
+  const handleMenuToggle = () => {
+    if (window.innerWidth <= 768) {
+      setSidebarOpen(o => !o);
+    } else {
+      toggleSidebarCollapsed();
+    }
+  };
+
   return (
     <div className="app-shell">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="main-content">
-        <Header title={meta.title} sub={meta.sub} onMenuToggle={() => setSidebarOpen(o => !o)} />
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        collapsed={sidebarCollapsed}
+      />
+      <div className={`main-content${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
+        <Header title={meta.title} sub={meta.sub} onMenuToggle={handleMenuToggle} />
         <div className="page-body">
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />

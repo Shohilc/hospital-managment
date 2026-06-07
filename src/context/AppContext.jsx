@@ -16,13 +16,25 @@ export function AppProvider({ children }) {
     return localStorage.getItem('hms_theme') || 'light';
   });
 
-  // Apply theme to <html> whenever it changes
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('hms_theme', theme);
   }, [theme]);
 
   const toggleTheme = () => setTheme(t => (t === 'light' ? 'dark' : 'light'));
+
+  // ── Sidebar collapsed (desktop) ──
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    return localStorage.getItem('hms_sidebar_collapsed') === 'true';
+  });
+
+  const toggleSidebarCollapsed = () => {
+    setSidebarCollapsed(v => {
+      const next = !v;
+      localStorage.setItem('hms_sidebar_collapsed', String(next));
+      return next;
+    });
+  };
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -51,7 +63,12 @@ export function AppProvider({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{ dbReady, user, login, logout, toasts, addToast, theme, toggleTheme }}>
+    <AppContext.Provider value={{
+      dbReady, user, login, logout,
+      toasts, addToast,
+      theme, toggleTheme,
+      sidebarCollapsed, toggleSidebarCollapsed,
+    }}>
       {children}
     </AppContext.Provider>
   );

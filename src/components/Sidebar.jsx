@@ -26,24 +26,28 @@ const NAV = [
   ]},
 ];
 
-export default function Sidebar({ isOpen, onClose }) {
+export default function Sidebar({ isOpen, onClose, collapsed }) {
   const { user, logout } = useApp();
+
+  const classes = [
+    'sidebar',
+    isOpen ? 'sidebar--open' : '',
+    collapsed ? 'sidebar--collapsed' : '',
+  ].filter(Boolean).join(' ');
 
   return (
     <>
       {/* Mobile overlay backdrop */}
-      {isOpen && (
-        <div className="sidebar-overlay" onClick={onClose} />
-      )}
+      {isOpen && <div className="sidebar-overlay" onClick={onClose} />}
 
-      <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
+      <aside className={classes}>
         <div className="sidebar-logo">
           <div className="logo-icon">🏥</div>
           <div className="logo-text">
             <h2>Hospira</h2>
             <span>Hospital Management</span>
           </div>
-          {/* Close button visible only on mobile */}
+          {/* Close button — mobile only */}
           <button className="sidebar-close-btn" onClick={onClose} title="Close menu">
             <MdClose />
           </button>
@@ -58,10 +62,12 @@ export default function Sidebar({ isOpen, onClose }) {
                   key={item.to}
                   to={item.to}
                   onClick={onClose}
+                  data-label={item.text}
+                  title={collapsed ? item.text : ''}
                   className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
                 >
                   <span className="nav-icon">{item.icon}</span>
-                  {item.text}
+                  <span className="nav-item-text">{item.text}</span>
                 </NavLink>
               ))}
             </div>
@@ -70,16 +76,16 @@ export default function Sidebar({ isOpen, onClose }) {
 
         <div className="sidebar-footer">
           <div className="user-info">
-            <div className="user-avatar">
+            <div className="user-avatar" title={collapsed ? (user?.name || 'Admin') : ''}>
               {user?.name?.charAt(0) || 'A'}
             </div>
-            <div className="user-details" style={{ flex: 1 }}>
+            <div className="user-details">
               <p>{user?.name || 'Admin'}</p>
               <span>{user?.role || 'Administrator'}</span>
             </div>
             <button
               onClick={logout}
-              style={{ background:'none', border:'none', color:'var(--text-muted)', cursor:'pointer', fontSize:18 }}
+              style={{ background:'none', border:'none', color:'var(--text-muted)', cursor:'pointer', fontSize:18, flexShrink:0 }}
               title="Logout"
             >
               <MdLogout />
