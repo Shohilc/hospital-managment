@@ -45,14 +45,6 @@ export default function LandingPage() {
             <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>Hospira</span>
           </div>
 
-          {/* Desktop Links */}
-          <div className="landing-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-            {['Products', 'Resources', 'Pricing', 'Enterprise'].map(link => (
-              <span key={link} style={{ fontSize: 14, color: '#555', cursor: 'pointer', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4 }}>
-                {link} {['Products', 'Resources'].includes(link) && <span style={{ fontSize: 10, opacity: 0.5 }}>▼</span>}
-              </span>
-            ))}
-          </div>
 
           {/* Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
