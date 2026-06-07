@@ -88,7 +88,7 @@ export default function BillingGenerate() {
           <span className="text-xs text-gray-400 bg-gray-100 px-2.5 py-0.5 rounded-full hidden sm:block">Billing</span>
         </div>
         <motion.button whileHover={{ scale:1.04 }} whileTap={{ scale:0.97 }}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/billing')}
           className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors duration-200 px-3 py-1.5 rounded-full hover:bg-gray-100">
           <MdArrowBack className="text-base" /> Back
         </motion.button>

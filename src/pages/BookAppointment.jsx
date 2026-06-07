@@ -149,7 +149,7 @@ export default function BookAppointment() {
           <div style={{ width: 30, height: 30, background: '#1a73e8', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🏥</div>
           <span style={{ fontSize: 15, fontWeight: 600, color: '#202124' }}>Hospira HMS</span>
         </div>
-        <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#5f6368', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
+        <button onClick={() => navigate('/appointments')} style={{ background: 'none', border: 'none', color: '#5f6368', fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
           <MdArrowBack style={{ fontSize: 16 }} /> Back
         </button>
       </nav>

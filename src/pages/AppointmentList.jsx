@@ -85,7 +85,7 @@ export default function AppointmentList() {
         </div>
         <div style={{ display:'flex', gap:10 }}>
           <button onClick={() => navigate('/book-appointment')} style={{ background:'#1a73e8', color:'#fff', border:'none', borderRadius:24, padding:'7px 18px', fontSize:13, fontWeight:500, cursor:'pointer' }}>+ Book Appointment</button>
-          <button onClick={() => navigate(-1)} style={{ background:'none', border:'1px solid #e0e0e0', borderRadius:24, padding:'7px 16px', fontSize:13, color:'#5f6368', cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}>
+          <button onClick={() => navigate('/appointments')} style={{ background:'none', border:'1px solid #e0e0e0', borderRadius:24, padding:'7px 16px', fontSize:13, color:'#5f6368', cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}>
             <MdArrowBack style={{ fontSize:15 }} /> Back
           </button>
         </div>

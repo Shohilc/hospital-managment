@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { billQueries, patientQueries } from '../db/queries';
 import { useApp } from '../context/AppContext';
 import Modal from '../components/Modal';
@@ -8,6 +9,7 @@ const EMPTY = { patient_id:'', consultation_fee:0, medicine_fee:0, lab_fee:0, be
 
 export default function Billing() {
   const { addToast } = useApp();
+  const navigate = useNavigate();
   const [bills, setBills] = useState([]);
   const [patients, setPatients] = useState([]);
   const [filter, setFilter] = useState('');
@@ -74,7 +76,7 @@ export default function Billing() {
           </div>
           <button
             className="btn btn-primary"
-            onClick={() => window.location.href = '/billing-generate'}
+            onClick={() => navigate('/billing-generate')}
             style={{ display:'flex', alignItems:'center', gap:6, fontSize:13 }}
           >
             + Generate New Bill
@@ -115,7 +117,7 @@ export default function Billing() {
               style={{ padding:'20px 22px', display:'flex', flexDirection:'column', gap:12, cursor:'pointer', transition:'box-shadow 0.15s' }}
               onMouseEnter={e => e.currentTarget.style.boxShadow='0 4px 16px rgba(60,64,67,0.14)'}
               onMouseLeave={e => e.currentTarget.style.boxShadow=''}
-              onClick={() => window.location.href = card.href}
+              onClick={() => navigate(card.href)}
             >
               <div style={{ width:44, height:44, background:card.bg, borderRadius:12, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22 }}>
                 {card.icon}
@@ -125,7 +127,7 @@ export default function Billing() {
                 <div style={{ fontSize:12, color:'var(--text-muted)', lineHeight:1.6 }}>{card.desc}</div>
               </div>
               <button
-                onClick={e => { e.stopPropagation(); window.location.href = card.href; }}
+                onClick={e => { e.stopPropagation(); navigate(card.href); }}
                 style={{ alignSelf:'flex-start', background:card.color, color:'#fff', border:'none', borderRadius:20, padding:'6px 16px', fontSize:12, fontWeight:600, cursor:'pointer' }}
               >
                 {card.btn} →
