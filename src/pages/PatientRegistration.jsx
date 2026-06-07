@@ -349,9 +349,9 @@ export default function PatientRegistration() {
               }}
               onMouseEnter={e => e.target.style.background = '#1557b0'}
               onMouseLeave={e => e.target.style.background = '#1a73e8'}
-              disabled={false}
+
             >
-              {isSubmitting ? 'Registering...' : 'Register'}
+              Register
             </button>
             
             {errors.submit && <div style={{ color: '#d93025', fontSize: 13, textAlign: 'center', marginTop: 4 }}>{errors.submit}</div>}
